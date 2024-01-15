@@ -1,12 +1,15 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { CatsService } from './cats/cats.service';
 
+/*
+curl -X GET localhost:3000
+*/
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private catsService: CatsService) {}
 
   @Get()
   getHello(): string {
-    return this.appService.getHello();
+    return this.catsService.meow();
   }
 }
