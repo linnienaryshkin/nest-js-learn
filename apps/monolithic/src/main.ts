@@ -4,7 +4,9 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { AllExceptionFilter } from './all-exception/all-exception.filter';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    snapshot: true,
+  });
 
   // app.use(logger);
   app.useGlobalFilters(new AllExceptionFilter());
