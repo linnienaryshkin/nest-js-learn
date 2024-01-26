@@ -7,6 +7,7 @@ import { CatsController } from './cats/cats.controller';
 import { SseModule } from './sse/sse.module';
 import { WebSocketsController } from './web-sockets/web-sockets.controller';
 import { WebSocketsModule } from './web-sockets/web-sockets.module';
+import { MyLibraryModule } from '@app/my-library';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { WebSocketsModule } from './web-sockets/web-sockets.module';
       // Go to https://devtools.nestjs.com/
       http: process.env.NODE_ENV !== 'production',
     }),
+    MyLibraryModule,
   ],
   controllers: [AppController, WebSocketsController],
 })

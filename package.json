@@ -7,6 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
+    "build:myLibrary": "nest build myLibrary",
     "start:monolithic": "nest start monolithic --debug --builder swc --type-check --watch",
     "start:microservices": "nest start microservices --debug --builder swc --type-check --watch",
     "start:prod": "node dist/apps/monolithic/main",
