@@ -1,8 +1,32 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src",
+  "sourceRoot": "apps/monolithic/src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/monolithic/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/monolithic",
+  "projects": {
+    "monolithic": {
+      "type": "application",
+      "root": "apps/monolithic",
+      "entryFile": "main",
+      "sourceRoot": "apps/monolithic/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/monolithic/tsconfig.app.json"
+      }
+    },
+    "microservices": {
+      "type": "application",
+      "root": "apps/microservices",
+      "entryFile": "main",
+      "sourceRoot": "apps/microservices/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/microservices/tsconfig.app.json"
+      }
+    }
   }
 }
