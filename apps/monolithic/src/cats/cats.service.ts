@@ -25,6 +25,6 @@ export class CatsService {
   }
 
   meow(): string {
-    return 'Meow!';
+    return 'monolithic: Meow!';
   }
 }
