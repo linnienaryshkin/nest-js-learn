@@ -8,6 +8,7 @@ import { SseModule } from './sse/sse.module';
 import { WebSocketsController } from './web-sockets/web-sockets.controller';
 import { WebSocketsModule } from './web-sockets/web-sockets.module';
 import { MyLibraryModule } from '@app/my-library';
+import { AsyncLocalStorage } from 'async_hooks';
 
 @Module({
   imports: [
@@ -20,10 +21,36 @@ import { MyLibraryModule } from '@app/my-library';
     }),
     MyLibraryModule,
   ],
+  providers: [
+    {
+      provide: AsyncLocalStorage,
+      useValue: new AsyncLocalStorage(),
+    },
+  ],
   controllers: [AppController, WebSocketsController],
 })
 export class AppModule {
+  constructor(
+    // inject the AsyncLocalStorage in the module constructor,
+    private readonly als: AsyncLocalStorage<{ userId: string }>,
+  ) {}
+
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(logger).forRoutes(CatsController);
+
+    // bind the middleware,
+    consumer
+      .apply((req, res, next) => {
+        // populate the store with some default values
+        // based on the request,
+        const store = {
+          userId: req.headers['x-user-id'],
+        };
+        // and pass the "next" function as callback
+        // to the "als.run" method together with the store.
+        this.als.run(store, () => next());
+      })
+      // and register it for all routes (in case of Fastify use '(.*)')
+      .forRoutes('*');
   }
 }
